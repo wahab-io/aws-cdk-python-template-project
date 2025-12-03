@@ -12,6 +12,8 @@ directory.  To create the virtualenv it assumes that there is a `python3`
 package. If for any reason the automatic creation of the virtualenv fails,
 you can create the virtualenv manually.
 
+## Installation
+
 To manually create a virtualenv on MacOS and Linux:
 
 ```
@@ -31,28 +33,51 @@ If you are a Windows platform, you would activate the virtualenv like this:
 % .venv\Scripts\activate.bat
 ```
 
-Once the virtualenv is activated, you can install the required dependencies.
+Once the virtualenv is activated, install the required Python dependencies:
 
 ```
 $ pip install -r requirements.txt
 ```
 
-At this point you can now synthesize the CloudFormation template for this code.
+Next, install the AWS CDK CLI and libraries **locally within the project** (not globally). This ensures version consistency and allows different CDK versions across projects:
 
 ```
-$ cdk synth
+$ npm install
 ```
+
+This will install the CDK CLI specified in `package.json` into the local `node_modules` directory. You can then run CDK commands using the `npx` prefix, which automatically uses the locally installed version.
 
 To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
+them to your `requirements.txt` file and rerun the `pip install -r requirements.txt`
 command.
+
+## Architecture
+
+This CDK application deploys the following infrastructure:
+
+### Backend Stack
+
+The Backend stack (`backend/component.py`) currently serves as a template foundation with no active resources deployed. The stack includes:
+
+- **Stack Definition**: A basic CDK Stack construct that can be extended with AWS resources
+- **Template Structure**: Commented example code showing how to add resources (e.g., SQS Queue)
+
+This is a starter template designed to be customized with your specific infrastructure requirements. Resources can be added by uncommenting and modifying the example code or by adding new AWS service constructs from the `aws_cdk` library.
 
 ## Useful commands
 
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
+At this point you can now synthesize the CloudFormation template for this code.
+
+```
+$ npx cdk synth
+```
+
+Additional useful commands (note the `npx` prefix to use the locally installed CDK):
+
+ * `npx cdk ls`          list all stacks in the app
+ * `npx cdk synth`       emits the synthesized CloudFormation template
+ * `npx cdk deploy`      deploy this stack to your default AWS account/region
+ * `npx cdk diff`        compare deployed stack with current state
+ * `npx cdk docs`        open CDK documentation
 
 Enjoy!
