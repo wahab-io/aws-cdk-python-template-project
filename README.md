@@ -14,29 +14,38 @@ you can create the virtualenv manually.
 
 ## Installation
 
-To manually create a virtualenv on MacOS and Linux:
+This project uses [uv](https://docs.astral.sh/uv/) for Python dependency management, which provides fast and reliable package installation.
+
+First, ensure uv is installed on your system:
 
 ```
-$ python3 -m venv .venv
+$ pip install uv
 ```
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+or
+
+```
+$ curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Once uv is installed, you can install all dependencies and create a virtual environment in one step:
+
+```
+$ uv sync
+```
+
+This will automatically create a virtual environment and install all project dependencies defined in `pyproject.toml`.
+
+To activate the virtual environment created by uv:
 
 ```
 $ source .venv/bin/activate
 ```
 
-If you are a Windows platform, you would activate the virtualenv like this:
+On Windows:
 
 ```
 % .venv\Scripts\activate.bat
-```
-
-Once the virtualenv is activated, install the required Python dependencies:
-
-```
-$ pip install -r requirements.txt
 ```
 
 Next, install the AWS CDK CLI and libraries **locally within the project** (not globally). This ensures version consistency and allows different CDK versions across projects:
@@ -47,9 +56,13 @@ $ npm install
 
 This will install the CDK CLI specified in `package.json` into the local `node_modules` directory. You can then run CDK commands using the `npx` prefix, which automatically uses the locally installed version.
 
-To add additional dependencies, for example other CDK libraries, just add
-them to your `requirements.txt` file and rerun the `pip install -r requirements.txt`
-command.
+To add additional dependencies, for example other CDK libraries, simply add them to the `dependencies` array in `pyproject.toml` and run:
+
+```
+$ uv sync
+```
+
+For development dependencies like testing tools, add them to the `dev-dependencies` section under `[tool.uv]` in `pyproject.toml`.
 
 ## Architecture
 

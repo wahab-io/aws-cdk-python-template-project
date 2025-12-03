@@ -1,0 +1,24 @@
+[project]
+name = "aws-cdk-python-template"
+version = "0.1.0"
+description = "AWS CDK Python template project"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "aws-cdk-lib==2.231.0",
+    "constructs>=10.0.0,<11.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==6.2.5",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest==6.2.5",
+]
